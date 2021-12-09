@@ -19,6 +19,14 @@ class Api::DoctorsController < ApplicationController
         end
     end
 
+    def update
+        if (@doctor.update(doc_params))
+            render json: @doctor, include: [:appointments, :patients]
+        else
+            render json: {error: @doctor.errors}, status: 422
+        end
+    end
+
     def destroy
         render json: @doctor.destroy
     end
