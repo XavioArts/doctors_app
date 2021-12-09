@@ -1,17 +1,20 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import SemanticLoader from "../components/SemanticLoader";
+import useAxiosOnMount from "../hooks/useAxiosOnMount";
 
 const Doctors = () => {
-    const [doctors, setDoctors] = useState([]);
+    // const [doctors, setDoctors] = useState([]);
 
-    useEffect(() => {
-        getDoctors();
-    }, []);
+    // useEffect(() => {
+    //     getDoctors();
+    // }, []);
 
-    const getDoctors = async () => {
-        let res = await axios.get("/api/doctors");
-        setDoctors(res.data);
-    }
+    // const getDoctors = async () => {
+    //     let res = await axios.get("/api/doctors");
+    //     setDoctors(res.data);
+    // }
+    const { data: doctors, setData: setDoctors, loading, error } = useAxiosOnMount("/api/doctors");
 
     const renderDoctors = () => {
         return doctors.map((doctor) => {
@@ -40,7 +43,8 @@ const Doctors = () => {
     return (
         <div>
             <h1>Doctors page</h1>
-            {renderDoctors()}
+            {loading && <SemanticLoader text="Getting doctors..." />}
+            {doctors && renderDoctors()}
         </div>
     );
 };
