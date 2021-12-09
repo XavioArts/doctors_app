@@ -20,11 +20,18 @@ const Doctors = () => {
                     return <p>Appointment date: {app.date}, with {app.patient_id}</p>;
                 });
             };
+            const renderPatients = () => {
+                return doctor.patients.map((p) => {
+                    return <p>Name: {p.name}, Patient Id: {p.id}</p>;
+                });
+            };
             return (
                 <div>
                     <h2>{doctor.name}</h2>
                     <h4>Appointments:</h4>
                     {renderApps()}
+                    <h4>Patients:</h4>
+                    {renderPatients()}
                 </div>
             );
         });
