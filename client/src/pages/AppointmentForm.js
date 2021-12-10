@@ -24,19 +24,21 @@ const AppointmentForm = (props) => {
                         onChange={(e, { value }) => setPatientId(value)}
                         />
                     </Form.Field>
-                    <Dropdown selection fluid options={props.doctors.map((d)=>{
+                    <label>Select a doctor:</label>
+                    <Form.Dropdown selection fluid options={props.doctors.map((d)=>{
                         // console.log({text: d.name, value: d.id, key: d.id})
+                        
                         return {text: d.name, value: d.id, key: d.id}})} 
                         onChange={(e, { value }) => setDoctorId(value)}>
-                    </Dropdown>
+                    </Form.Dropdown>
                     <Form.Field>
                         <label>date</label>
-                        <Form.Input
+                        <input type="date"
                         value={date}
                         onChange={(e, { value }) => setDate(value)}
                         />
                     </Form.Field>
-                    <Button>add</Button>
+                    <Button onClick={props.addAppointment}>add</Button>
                     <Button onClick={()=>{setShow(false)}}>cancel</Button>
                 </Form> }
         </div>
