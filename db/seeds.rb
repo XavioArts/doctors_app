@@ -24,7 +24,7 @@ docs =[d1,d2,d3,d4,d5]
     patient = Patient.create(name: Faker::Name.name)
     3.times do 
         doc = docs.sample
-        Appointment.create(doctor_id: doc.id, patient_id: patient.id, date: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now))
+        Appointment.create(doctor_id: doc.id, patient_id: patient.id, date: Faker::Time.between(from: DateTime.now - 10, to: DateTime.now, format: :long))
     end
 end
 
