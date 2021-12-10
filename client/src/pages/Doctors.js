@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { Button, List, Segment } from "semantic-ui-react";
 import DoctorNewForm from "../components/DoctorNewForm";
 import DoctorsContainer from "../components/DoctorsContainer";
@@ -8,6 +9,7 @@ import { CenterDiv } from "../components/Styles";
 import useAxiosOnMount from "../hooks/useAxiosOnMount";
 
 const Doctors = () => {
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
     const [active, setActive] = useState(false);
     const { data: doctors, setData: setDoctors, loading, error } = useAxiosOnMount("/api/doctors");
@@ -26,7 +28,7 @@ const Doctors = () => {
             return (
                 <List.Item>
                     <List.Content floated='right'>
-                        <Button>Select</Button>
+                        <Button onClick={()=>navigate(`/doctors/${doctor.id}`)}>Select</Button>
                     </List.Content>
                   <List.Icon name='user md' size='large' verticalAlign='middle' />
                   <List.Content>
