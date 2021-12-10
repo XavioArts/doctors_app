@@ -35,7 +35,7 @@ const AppointmentForm = (props) => {
                         <label>date</label>
                         <input type="date"
                         value={date}
-                        onChange={(e, { value }) => setDate(value)}
+                        onChange={(e, { value }) => setDate(value.toString())}
                         />
                     </Form.Field>
                     <Button onClick={props.addAppointment}>add</Button>
