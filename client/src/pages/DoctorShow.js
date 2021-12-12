@@ -71,7 +71,8 @@ const DoctorShow = () => {
 
     const addAppointment = async (app) => {
         let res = await axios.post("/api/appointments", app)
-        setAppointments([...appointments, res.data]);
+        let patName = patients.find((p)=>p.id === app.patient_id).name
+        setAppointments([...appointments, {...res.data, patient_name: patName}]);
     };
 
     const toggleShow = () => {
@@ -105,7 +106,7 @@ const DoctorShow = () => {
                 </List>}
                 <CenterDiv>
                     <Button onClick={()=>toggleShow()}>{show ? "Cancel" : "Add Appointment"}</Button>
-                    {show && <DocAddAppForm/>}
+                    {show && <DocAddAppForm addAppointment={addAppointment} patients={patients} doc_id={doctor.id} toggleShow={toggleShow} />}
                 </CenterDiv>
                 <h2 style={{textAlign: "center"}}>Patients</h2>
                 {doctor && patients && appointments && 
