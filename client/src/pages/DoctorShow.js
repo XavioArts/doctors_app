@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import DoctorsContainer from "../components/DoctorsContainer";
 import SemanticLoader from "../components/SemanticLoader";
@@ -6,13 +6,15 @@ import useAxiosOnMount from "../hooks/useAxiosOnMount";
 import { Button, Divider, Icon, Segment, List } from "semantic-ui-react";
 import { CenterDiv, FlexDiv } from "../components/Styles";
 import axios from "axios";
+import DocAddAppForm from "../components/DocAddAppForm";
 
 
 const DoctorShow = () => {
 
     const {id} = useParams();
     const navigate = useNavigate();
-    
+    const [show, setShow] = useState(false);
+
     const { data: doctor, setData: setDoctor, loading: doc_loading, error: doc_error } = useAxiosOnMount(`/api/doctors/${id}`);
     const { data: patients, setData: setPatients, loading: patients_loading, error: patients_error } = useAxiosOnMount(`/api/patients`);
     const { data: appointments, setData: setAppointments, loading: appointments_loading, error } = useAxiosOnMount(`/api/appointments`);
@@ -67,6 +69,15 @@ const DoctorShow = () => {
         navigate("/doctors");
     };
 
+    const addAppointment = async (app) => {
+        let res = await axios.post("/api/appointments", app)
+        setAppointments([...appointments, res.data]);
+    };
+
+    const toggleShow = () => {
+        setShow(!show);
+    };
+
     if (!doctor || !patients || !appointments) {
         return <SemanticLoader />
     }
@@ -93,8 +104,8 @@ const DoctorShow = () => {
                     {renderAppointments()}
                 </List>}
                 <CenterDiv>
-                    <Button>Add Appointment</Button>
-                    {/* form will go here toggled */}
+                    <Button onClick={()=>toggleShow()}>{show ? "Cancel" : "Add Appointment"}</Button>
+                    {show && <DocAddAppForm/>}
                 </CenterDiv>
                 <h2 style={{textAlign: "center"}}>Patients</h2>
                 {doctor && patients && appointments && 
