@@ -5,6 +5,7 @@ import SemanticLoader from "../components/SemanticLoader";
 import useAxiosOnMount from "../hooks/useAxiosOnMount";
 import { Button, Divider, Icon, Segment, List } from "semantic-ui-react";
 import { CenterDiv, FlexDiv } from "../components/Styles";
+import axios from "axios";
 
 
 const DoctorShow = () => {
@@ -61,6 +62,11 @@ const DoctorShow = () => {
         });
     };
 
+    const deleteDoc = async () => {
+        await axios.delete(`/api/doctors/${id}`);
+        navigate("/doctors");
+    };
+
     if (!doctor || !patients || !appointments) {
         return <SemanticLoader />
     }
@@ -76,7 +82,7 @@ const DoctorShow = () => {
                 <Divider />
                 <Button.Group>
                     <Button onClick={()=>navigate(`/doctors/${doctor.id}/edit`)}>Edit</Button>
-                    <Button color="red">Delete</Button>
+                    <Button color="red" onClick={()=>deleteDoc()} >Delete</Button>
                 </Button.Group>
                 <Divider />
             </Segment>
