@@ -24,7 +24,7 @@ const Appointments = () => {
     const addAppointment = async (appointment) => {
         try {
             let res = await axios.post(`/api/appointments`, appointment)
-            setAppointments(res.data, ...appointments)
+            setAppointments([res.data, ...appointments])
         } catch (err) {
             console.log(err)
         }
@@ -33,7 +33,7 @@ const Appointments = () => {
     return (
         <div>
             <h1>Appointments page</h1>
-            <AppointmentForm doctors={doctors} addAppointment={addAppointment}/>
+            <AppointmentForm doctors={doctors} patients={patients} addAppointment={addAppointment}/>
             {patientsLoading && <p>loading patients</p>}
             {patients && (
                 <List
@@ -51,7 +51,7 @@ const Appointments = () => {
           data={appointments}
           name="Appointments"
           renderData={({
-            score,
+            date,
             id,
             patient_name,
             doctor_name,
@@ -60,9 +60,9 @@ const Appointments = () => {
           }) => {
             return (
               <Card>
-                <Card.Content header={`${patient_name}`} />
+                <Card.Content header={`${patients.find((p)=>patient_id===p.id).name}`} />
                 <Card.Content
-                  description={`score: ${score} on ${doctor_name}`}
+                  description={<><p>date: {date}</p> <p>with {doctors.find((d)=>doctor_id===d.id).name}</p></>}
                 />
                 <Card.Content extra>
                   <p>

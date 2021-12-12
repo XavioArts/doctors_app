@@ -6,11 +6,17 @@ import { List } from "semantic-ui-react";
 import PatientForm from './PatientForm';
 
 const Patients = () => {
-    const { data: patients,
+    const {
+        data: patients,
         setData: setPatients,
         loading,
         error
     } = useAxiosOnMount("/api/patients");
+    const {
+        data: doctors,
+        loading: doctorsLoading
+    } = useAxiosOnMount("/api/doctors");
+  
 
     const renderPatients = () => {
         return patients.map((patient) => {
@@ -25,7 +31,7 @@ const Patients = () => {
                 });
             };
 
-            const add = async (patient) => {
+            const addPatient = async (patient) => {
                 try {
                     let res = await axios.post(`/api/patients`, patient)
                     setPatients(res.data, ...patients)
@@ -48,10 +54,12 @@ const Patients = () => {
 
     return (
         <div>
-            <h1>Patients Page</h1>
-            <PatientForm />
+            <h1>Patient's Page</h1>
+            <h4>Please View Your Information Below</h4>
             {loading && <SemanticLoader text="Getting Patients..." />}
             {patients && <List divided relaxed size="large" style={{ width: "75vw" }}>{renderPatients()}</List>}
+            <h3>Set New Appointment with Your Prefferred Doctor Below!</h3>
+            <PatientForm doctors={doctors} addPatient={Patients} />
         </div>
     );
 };

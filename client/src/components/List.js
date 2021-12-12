@@ -1,6 +1,7 @@
 import StringifyJson from "./StringifyJson";
 
 const List = ({ data, name, renderData }) => {
+  //console.log(["data: ", data])
   return (
     <div style={{ border: "1px solid black", margin: "10px" }}>
       {name && <h3>{name}</h3>}

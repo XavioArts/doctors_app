@@ -5,11 +5,11 @@ import axios from 'axios';
 const PatientForm = (props) => {
   const [show, setShow] = useState(false)
   const [doctorId, setDoctorId] = useState("")
-  const [appointmentId, setAppointmentId] = useState("")
+  const [patientId, setPatientId] = useState("")
   const [date, setDate] = useState("")
 
   const handleSubmit = (e) => {
-    props.addPatient({ doctor_id: doctorId, appointment_id: appointmentId, date: date })
+    props.addPatient({ doctor_id: doctorId, patient_id: patientId, date: date })
   }
   return (
     <div>
@@ -18,10 +18,10 @@ const PatientForm = (props) => {
 
         <Form onSubmit={handleSubmit}>
           <Form.Field>
-            <label>Enter Appointment</label>
+            <label>Create Your Appointment</label>
             <Form.Input
-              value={appointmentId}
-              onChange={(e, { value }) => setAppointmentId(value)}
+              value={patientId}
+              onChange={(e, { value }) => setPatientId(value)}
             />
           </Form.Field>
           <label>Select Doctor</label>
