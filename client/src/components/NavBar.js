@@ -1,14 +1,32 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { Menu } from "semantic-ui-react";
 
 const NavBar = () => {
     return (
         <div>
-            <h2>Navbar</h2>
-            <Link to="/" style={styles.link}>Home</Link>
-            <Link to="/doctors" style={styles.link}>Doctors</Link>
-            <Link to="/patients" style={styles.link}>Patients</Link>
-            <Link to="/appointments" style={styles.link}>Appointments</Link>
+            <Menu>
+                <NavLink to="/">
+                    <Menu.Item>
+                        Home
+                    </Menu.Item>
+                </NavLink>
+                <NavLink to="/doctors">
+                    <Menu.Item>
+                        Doctors
+                    </Menu.Item>
+                </NavLink>
+                <NavLink to="/patients">
+                    <Menu.Item>
+                        Patients
+                    </Menu.Item>
+                </NavLink>
+                <NavLink to="/appointments">
+                    <Menu.Item>
+                        Appt.
+                    </Menu.Item>
+                </NavLink>
+            </Menu>
         </div>
     );
 };
