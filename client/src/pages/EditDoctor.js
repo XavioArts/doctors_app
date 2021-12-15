@@ -29,7 +29,7 @@ const EditDoctor = () => {
                 <List.Item key={a.id}>
                     <List.Content floated='right'>
                         <ButtonGroup>
-                            <Button>Delete</Button>
+                            <Button onClick={()=>deleteAppointment(a.id)}>Delete</Button>
                             <Button>Edit</Button>
                         </ButtonGroup>
                     </List.Content>
@@ -46,6 +46,13 @@ const EditDoctor = () => {
         await axios.delete(`/api/doctors/${id}`);
         navigate("/doctors");
     };
+
+    const deleteAppointment = async (id) => {
+        await axios.delete(`/api/appointments/${id}`);
+        // update ui
+        let filteredApps = appointments.filter((a)=> a.id !== id);
+        setAppointments(filteredApps)
+    }
 
     const updateDoc = async (doc) => {
         let res = await axios.put(`/api/doctors/${id}`, doc)
