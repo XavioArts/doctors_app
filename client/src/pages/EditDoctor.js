@@ -1,7 +1,8 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, ButtonGroup, Divider, Icon, List, Segment } from "semantic-ui-react";
+import { Button, ButtonGroup, Divider, Form, Icon, List, Segment } from "semantic-ui-react";
+import DocEditForm from "../components/DocEditForm";
 import DoctorsContainer from "../components/DoctorsContainer";
 import SemanticLoader from "../components/SemanticLoader";
 import { CenterDiv, FlexDiv } from "../components/Styles";
@@ -15,7 +16,6 @@ const EditDoctor = () => {
     const { data: doctor, setData: setDoctor, loading: doc_loading, error: doc_error } = useAxiosOnMount(`/api/doctors/${id}`);
     const { data: patients, setData: setPatients, loading: patients_loading, error: patients_error } = useAxiosOnMount(`/api/patients`);
     const { data: appointments, setData: setAppointments, loading: appointments_loading, error } = useAxiosOnMount(`/api/appointments`);
-  
 
     const filterApps = () => {
         let apps = appointments.filter((a) => a.doctor_id === doctor.id);
@@ -47,6 +47,11 @@ const EditDoctor = () => {
         navigate("/doctors");
     };
 
+    const updateDoc = async (doc) => {
+        let res = await axios.put(`/api/doctors/${id}`, doc)
+        setDoctor(res.data);
+    };
+
     if (!doctor || !patients || !appointments) {
         return <SemanticLoader />
     }
@@ -56,11 +61,13 @@ const EditDoctor = () => {
             <Segment as={CenterDiv}>
                 <FlexDiv>
                     <Icon name="user circle" size="massive" />
-                    {doctor && <h1>{doctor.name}</h1>}
+                    {doctor && <h1>Edit {doctor.name}</h1>}
                 </FlexDiv>
                 <Divider />
-                {/* form will go here */}
+                {doctor &&
+                <DocEditForm doctor={doctor} updateDoc={updateDoc} />}
                 <Divider />
+                <Button color="red" onClick={()=>deleteDoc()}>Delete doctor</Button>
             </Segment>
             <Segment>
                 <h2 style={{textAlign: "center"}}>Appointments</h2>

@@ -1,6 +1,6 @@
 class Api::PatientsController < ApplicationController
 
-    before_action :set_patient, only: [:show, :destroy]
+    before_action :set_patient, only: [:show, :destroy, :update]
     
     def index
         render json: Patient.all, include: [:appointments, :doctors]
